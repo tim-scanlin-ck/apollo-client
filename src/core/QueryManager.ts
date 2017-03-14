@@ -349,8 +349,8 @@ export class QueryManager {
                                     fetchPolicy === 'cache-only' || fetchPolicy === 'cache-and-network';
 
       const networkStatusChanged = lastResult && queryStoreValue.networkStatus !== lastResult.networkStatus;
-
-      if (!isNetworkRequestInFlight(queryStoreValue.networkStatus) ||
+      const isInFlight = isNetworkRequestInFlight(queryStoreValue.networkStatus);
+      if (!isInFlight ||
           ( networkStatusChanged && options.notifyOnNetworkStatusChange ) ||
           shouldNotifyIfLoading) {
         // XXX Currently, returning errors and data is exclusive because we
@@ -402,14 +402,14 @@ export class QueryManager {
             if (isMissing && fetchPolicy !== 'cache-only') {
               resultFromStore = {
                 data: lastResult && lastResult.data,
-                loading: isNetworkRequestInFlight(queryStoreValue.networkStatus),
+                loading: isInFlight,
                 networkStatus: queryStoreValue.networkStatus,
                 stale: true,
               };
             } else {
               resultFromStore = {
                 data,
-                loading: isNetworkRequestInFlight(queryStoreValue.networkStatus),
+                loading: isInFlight,
                 networkStatus: queryStoreValue.networkStatus,
                 stale: false,
               };
