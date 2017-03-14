@@ -299,6 +299,7 @@ function addPreviousResultToIdValues (value: any, previousResult: any): any {
   //
   // If the value is an array, recurse over each item trying to add the `previousResult` for that
   // item.
+  
   if (isIdValue(value)) {
     return {
       ...value,
@@ -348,6 +349,7 @@ function addPreviousResultToIdValues (value: any, previousResult: any): any {
  */
 function resultMapper (resultFields: any, idValue: IdValueWithPreviousResult) {
   // If we had a previous result, we may be able to return that and preserve referential equality
+  
   if (idValue.previousResult) {
     const currentResultKeys = Object.keys(resultFields);
 
@@ -377,7 +379,7 @@ function resultMapper (resultFields: any, idValue: IdValueWithPreviousResult) {
     configurable: false,
     writable: false,
     value: idValue.id,
-  });
+  }); 
 
   return resultFields;
 }

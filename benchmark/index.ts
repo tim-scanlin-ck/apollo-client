@@ -83,6 +83,7 @@ const createReservations = (count: number) => {
   return reservations;
 };
 
+/*
 group((end) => {
   benchmark('constructing an instance', (done) => {
     new ApolloClient({});
@@ -245,7 +246,7 @@ times(25, (countR: number) => {
       end();
     });
   });
-});
+}); */
 
 // Measure the amount of time it takes to read a bunch of
 // objects from the cache.
@@ -261,7 +262,7 @@ times(50, (index) => {
         }
       }`;
     const houseId = '12';
-    const reservationCount = index + 1;
+    const reservationCount = (index + 1) * 40;
     const reservations = createReservations(reservationCount);
 
     const variables = {id: houseId };
@@ -302,6 +303,7 @@ times(50, (index) => {
   });
 });
 
+/*
 // Measure only the amount of time it takes to diff a query against the store
 //
 // This test allows us to differentiate between the fixed cost of .query() and the fixed cost
@@ -358,6 +360,6 @@ times(50, (index) => {
       end();
     });
   });
-});
+}); */
 
 runBenchmarks();
