@@ -245,9 +245,9 @@ export class QueryManager {
     mutation: DocumentNode,
     variables?: Object,
     optimisticResponse?: Object,
-    updateQueries?: MutationQueryReducersMap,
+    updateQueries?: MutationQueryReducersMap<T>,
     refetchQueries?: string[] | PureQueryOptions[],
-    update?: (proxy: DataProxy, mutationResult: Object) => void,
+    update?: (proxy: DataProxy, mutationResult: ApolloQueryResult<T> | {}) => void,
   }): Promise<ApolloQueryResult<T>> {
     const mutationId = this.generateQueryId();
 
@@ -266,7 +266,7 @@ export class QueryManager {
     this.queryDocuments[mutationId] = mutation;
 
     // Create a map of update queries by id to the query instead of by name.
-    const updateQueries: { [queryId: string]: MutationQueryReducer } = {};
+    const updateQueries: { [queryId: string]: MutationQueryReducer<T> } = {};
     if (updateQueriesByName) {
       Object.keys(updateQueriesByName).forEach(queryName => (this.queryIdsByName[queryName] || []).forEach(queryId => {
         updateQueries[queryId] = updateQueriesByName[queryName];

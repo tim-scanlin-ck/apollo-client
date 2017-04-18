@@ -95,7 +95,7 @@ export interface MutationInitAction {
   mutationId: string;
   optimisticResponse: Object | undefined;
   extraReducers?: ApolloReducer[];
-  updateQueries?: { [queryId: string]: MutationQueryReducer };
+  updateQueries?: { [queryId: string]: MutationQueryReducer<{}> };
   update?: (proxy: DataProxy, mutationResult: Object) => void;
 }
 
@@ -112,7 +112,7 @@ export interface MutationResultAction {
   variables: Object;
   mutationId: string;
   extraReducers?: ApolloReducer[];
-  updateQueries?: { [queryId: string]: MutationQueryReducer };
+  updateQueries?: { [queryId: string]: MutationQueryReducer<{}> };
   update?: (proxy: DataProxy, mutationResult: Object) => void;
 }
 

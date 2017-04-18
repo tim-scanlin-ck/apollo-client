@@ -377,7 +377,7 @@ describe('mutation results', () => {
           reducer: (previousResult, action) => {
             counter++;
             if (isMutationResultAction(action)) {
-              const newResult = cloneDeep(previousResult) as any;
+              const newResult = cloneDeep<any>(previousResult);
               newResult.todoList.todos.unshift(action.result.data!['createTodo']);
               return newResult;
             }
@@ -434,7 +434,7 @@ describe('mutation results', () => {
           reducer: (previousResult, action, variables: any) => {
             counter++;
             if (isMutationResultAction(action) && variables['id'] === 5) {
-              const newResult = cloneDeep(previousResult) as any;
+              const newResult = cloneDeep<any>(previousResult);
               newResult.todoList.todos.unshift(action.result.data!['createTodo']);
               return newResult;
             }
@@ -489,7 +489,7 @@ describe('mutation results', () => {
           reducer: (previousResult, action) => {
             if (isMutationResultAction(action) && action.operationName === 'createTodo') {
               counter++;
-              const newResult = cloneDeep(previousResult) as any;
+              const newResult = cloneDeep<any>(previousResult);
               newResult.todoList.todos.unshift(action.result.data!['createTodo']);
               return newResult;
             }
@@ -506,7 +506,7 @@ describe('mutation results', () => {
           reducer: (previousResult, action) => {
             if (isMutationResultAction(action) && action.operationName === 'wrongName') {
               counter++; // shouldn't be called, so counter shouldn't increase.
-              const newResult = cloneDeep(previousResult) as any;
+              const newResult = cloneDeep<any>(previousResult);
               newResult.todoList.todos.unshift(action.result.data!['createTodo']);
               return newResult;
             }
@@ -554,7 +554,7 @@ describe('mutation results', () => {
           reducer: (previousResult, action) => {
             counter++;
             if (isQueryResultAction(action)) {
-              const newResult = cloneDeep(previousResult) as any;
+              const newResult = cloneDeep<any>(previousResult);
               newResult.todoList.todos.unshift(action.result.data!['newTodos'][0]);
               return newResult;
             }
@@ -644,7 +644,7 @@ describe('mutation results', () => {
           reducer: (previousResult, action) => {
             counter++;
             if (isMutationResultAction(action)) {
-              const newResult = cloneDeep(previousResult) as any;
+              const newResult = cloneDeep<any>(previousResult);
               newResult.todoList.todos.unshift(action.result.data!['createTodo']);
               return newResult;
             }
@@ -659,7 +659,7 @@ describe('mutation results', () => {
           reducer: (previousResult, action) => {
             counter2++;
             if (isMutationResultAction(action) && action.result.data!['createTodo'].completed) {
-              const newResult = cloneDeep(previousResult) as any;
+              const newResult = cloneDeep<any>(previousResult);
               newResult.todoList.filteredTodos.unshift(action.result.data!['createTodo']);
               return newResult;
             }
@@ -852,15 +852,15 @@ describe('mutation results', () => {
         });
       })
       .then(() => {
-        return client.mutate({
+        return client.mutate<any>({
           mutation,
           updateQueries: {
             todoList: (prev, options) => {
-              const mResult = options.mutationResult as any;
+              const mResult = options.mutationResult;
               assert.equal(mResult.data.createTodo.id, '99');
               assert.equal(mResult.data.createTodo.text, 'This one was created with a mutation.');
 
-              const state = cloneDeep(prev) as any;
+              const state = cloneDeep<any>(prev);
               state.todoList.todos.unshift(mResult.data.createTodo);
               return state;
             },
@@ -922,16 +922,16 @@ describe('mutation results', () => {
         });
       })
       .then(() => {
-        return client.mutate({
+        return client.mutate<any>({
           mutation: mutationWithVars,
           variables,
           updateQueries: {
             todoList: (prev, options) => {
-              const mResult = options.mutationResult as any;
+              const mResult = options.mutationResult;
               assert.equal(mResult.data.createTodo.id, '99');
               assert.equal(mResult.data.createTodo.text, 'This one was created with a mutation.');
 
-              const state = cloneDeep(prev) as any;
+              const state = cloneDeep<any>(prev);
               state.todoList.todos.unshift(mResult.data.createTodo);
               return state;
             },
@@ -962,15 +962,15 @@ describe('mutation results', () => {
       });
       // Cancel the query right away!
       subs.unsubscribe();
-      return client.mutate({
+      return client.mutate<any>({
         mutation,
         updateQueries: {
           todoList: (prev, options) => {
-            const mResult = options.mutationResult as any;
+            const mResult = options.mutationResult;
             assert.equal(mResult.data.createTodo.id, '99');
             assert.equal(mResult.data.createTodo.text, 'This one was created with a mutation.');
 
-            const state = cloneDeep(prev) as any;
+            const state = cloneDeep<any>(prev);
             state.todoList.todos.unshift(mResult.data.createTodo);
             return state;
           },
@@ -989,15 +989,15 @@ describe('mutation results', () => {
       const subs = obsHandle.subscribe({
         next: () => null,
       });
-      return client.mutate({
+      return client.mutate<any>({
         mutation,
         updateQueries: {
           todoList: (prev, options) => {
-            const mResult = options.mutationResult as any;
+            const mResult = options.mutationResult;
             assert.equal(mResult.data.createTodo.id, '99');
             assert.equal(mResult.data.createTodo.text, 'This one was created with a mutation.');
 
-            const state = cloneDeep(prev) as any;
+            const state = cloneDeep<any>(prev);
             state.todoList.todos.unshift(mResult.data.createTodo);
             return state;
           },
@@ -1016,12 +1016,12 @@ describe('mutation results', () => {
 
       obsHandle.subscribe({
         next(obj) {
-          client.mutate({
+          client.mutate<any>({
             mutation,
             updateQueries: {
               todoList: (prev, options) => {
-                const mResult = options.mutationResult as any;
-                const state = cloneDeep(prev) as any;
+                const mResult = options.mutationResult;
+                const state = cloneDeep<any>(prev);
                 // It's unfortunate that this function is called at all, but we are removing
                 // the updateQueries API soon so it won't matter.
                 state.todoList.todos.unshift(mResult.data && mResult.data.createTodo);
@@ -1031,12 +1031,12 @@ describe('mutation results', () => {
           })
           .then(
             () => done(new Error('Mutation should have failed')),
-            () => client.mutate({
+            () => client.mutate<any>({
               mutation,
               updateQueries: {
                 todoList: (prev, options) => {
-                  const mResult = options.mutationResult as any;
-                  const state = cloneDeep(prev) as any;
+                  const mResult = options.mutationResult;
+                  const state = cloneDeep<any>(prev);
                   state.todoList.todos.unshift(mResult.data.createTodo);
                   return state;
                 },

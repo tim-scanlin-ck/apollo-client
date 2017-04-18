@@ -96,7 +96,7 @@ export interface SubscriptionOptions {
   variables?: { [key: string]: any };
 }
 
-export interface MutationOptions {
+export interface MutationOptions<T> {
   /**
    * A GraphQL document, often created with `gql` from the `graphql-tag`
    * package, that contains a single mutation inside of it.
@@ -124,7 +124,7 @@ export interface MutationOptions {
    * results of the mutation into the results of queries that are currently
    * being watched by your application.
    */
-  updateQueries?: MutationQueryReducersMap;
+  updateQueries?: MutationQueryReducersMap<T>;
 
   /**
    * A list of query names which will be refetched once this mutation has

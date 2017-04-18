@@ -4,6 +4,8 @@ Expect active development and potentially significant breaking changes in the `0
 
 ### vNEXT
 
+- Pass generic type of a mutation to `updateQueries` and `update` options [PR #X](https://github.com/apollographql/apollo-client/pull/X)
+
 ### 1.0.3
 - Fix: Remove usage of String.endsWith (not supported by IE) [PR #1583](https://github.com/apollographql/apollo-client/pull/1583)
 - Make reducerError contain information about which query caused it [PR #1538](https://github.com/apollographql/apollo-client/pull/1538)
