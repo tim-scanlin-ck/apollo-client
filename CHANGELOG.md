@@ -1,6 +1,7 @@
 # Change log
 
 ### vNEXT
+- Feature: Added support flow flow typechecking [PR #1688](https://github.com/apollographql/apollo-client/pull/1688)
 
 ### 1.2.2
 - Fix: Remove race condition in queryListenerFromObserver [PR #1670](https://github.com/apollographql/apollo-client/pull/1670)
